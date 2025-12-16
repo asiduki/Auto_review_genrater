@@ -14,7 +14,7 @@ function App() {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/Api/get-response",
+          "https://ai-code-reviewer-watl.onrender.com/Api/get-response",
           { prompt },
           { withCredentials: true }
         );
