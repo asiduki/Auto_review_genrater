@@ -28,7 +28,6 @@ async function generateContent(prompt) {
     const result = await model.generateContent(prompt);
     return result.response.text();
   } catch (error) {
-    console.log(error);
     return { error: true, message: "Refresh this page " };
   }
 }
