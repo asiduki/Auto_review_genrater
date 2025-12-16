@@ -13,7 +13,7 @@ function App() {
   const fetchData = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/Api/get-response",
+        "https://auto-review-genrater.onrender.com/Api/get-response",
         { prompt }
       );
       // if(res.data.error){
