@@ -25,8 +25,6 @@ function App() {
       } else {
         setValue(res.data);
       }
-
-
       setShowCopy(true);
     } catch (err) {
       setValue("Server busy, please refresh the page.");
