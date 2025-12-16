@@ -14,7 +14,7 @@ function App() {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "https://auto-review-genrater.onrender.com/Api/get-response",
+          "http://localhost:5000/Api/get-response",
           { prompt },
           { withCredentials: true }
         );
@@ -29,7 +29,7 @@ function App() {
         } else {
           setValue("Something went wrong. Please try again.");
         }
-
+        console.log(res);
         setShowCopy(true);
       } catch (err) {
         setValue("Server busy, please refresh the page.");

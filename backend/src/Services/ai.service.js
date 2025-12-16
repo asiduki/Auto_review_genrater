@@ -1,42 +1,35 @@
 require("dotenv").config();
-const Groq = require("groq-sdk");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY, 
-});
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 
 const instructionText = `Act as an AI bot generating authentic Google Maps reviews for "Chandra Prabha Travels" (a taxi service in Ghaziabad, Shop No 150, Bhur Bharat Nagar).
 
 Your Goal: Write reviews mimicking happy Indian customers.
 
 Strict Style Guidelines:
-1. Output ONLY the review text. Do NOT write "Here are the reviews" or any intro. Use Hinglish.
-2. Tone: Natural, polite, slightly imperfect English (Indian style). Use phrases like "Very use full service", "Need and clean car", "Driver behavior good".
+1. Output ONLY the review text. Do NOT write "Here are the reviews" or any intro i want only one use hindiglish .
+2. Tone: Natural, polite, slightly imperfect English (Indian style). Use phrases like "Very use full service", "Need and clean car" (instead of neat), "Driver behavior good".
 3. Content: Mix different scenarios:
-   - Trip to Agra/Mathura/Vrindavan
-   - Wedding booking (Innova Crysta / Tempo Traveller)
-   - Local / Outstation drop
-4. Emojis: MUST use 🙏 and 👍
-5. Verification words: "Safe journey", "On time", "Cooperative staff"
-6. Maximum words: 40 only.
-`;
+   - Trip to Agra/Mathura/Vrindavan.
+   - Wedding booking (Innova Crysta/Tempo Traveller).
+   - Local/Outstation drop.
+4. Emojis: MUST use 🙏 and 👍.
+5. Verification: Mention "Safe journey", "On time", "Cooperative staff".
+6.maximum word used should be 40 not more than that .`;
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash-lite",
+  systemInstruction: instructionText,
+});
 
 async function generateContent(prompt) {
   try {
-    const completion = await groq.chat.completions.create({
-      model: "llama3-8b-8192", // ✅ fast & free
-      messages: [
-        { role: "system", content: instructionText },
-        { role: "user", content: prompt },
-      ],
-      temperature: 0.8,
-      max_tokens: 120,
-    });
-
-    return completion.choices[0].message.content.trim();
+    const result = await model.generateContent(prompt);
+    return result.response.text();
   } catch (error) {
-    // console.error("Groq Error:", error.message);
-    return "Server busy, please refresh page 🙏";
+    // console.log(error);
+    return { error: true, message: "Refresh this page " };
   }
 }
 
