@@ -1,5 +1,5 @@
 import express from 'express'; 
-import generateContent from '../Src/Services/ai.service.js'; 
+import generateContent from '../src/Services/ai.service.js'; 
 export const getResponse = async (req, res) => { 
     const prompt = req.body.prompt;
     if (!prompt) {
