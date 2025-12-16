@@ -13,18 +13,16 @@ function App() {
   const fetchData = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/Api/get-response",
-        { prompt }
+        "https://auto-review-genrater.onrender.com/Api/get-response",
+        { prompt } , {withCredentials: true}
       );
       // if(res.data.error){
       //   window.location.reload();
       //   return ;
       // }
-      if (typeof res.data === "object") {
-        setValue(res.data.message || "Something went wrong");
-      } else {
+   
         setValue(res.data);
-      }
+      
       setShowCopy(true);
     } catch (err) {
       setValue("Server busy, please refresh the page.");
